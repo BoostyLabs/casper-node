@@ -21,8 +21,7 @@ ed25519-dalek = { version = "1.0.0", default-features = false, features = ["rand
 getrandom = { version = "0.2.0", features = ["rdrand"], optional = true }
 hex = { version = "0.4.2", default-features = false, features = ["alloc"] }
 hex_fmt = "0.3.0"
-humantime = { version = "2", optional = true }
-k256 = { version = "0.7.2", default-features = false, features = ["ecdsa", "sha256", "zeroize"] }
+k256 = { version = "0.10.4", features = ["ecdsa"] }
 num = { version = "0.4.0", default-features = false, features = ["alloc"] }
 num-derive = { version = "0.3.0", default-features = false }
 num-integer = { version = "0.1.42", default-features = false }
@@ -64,7 +63,7 @@ untrusted = "0.7.1"
 
 [features]
 json-schema = ["once_cell", "schemars"]
-std = ["derp", "getrandom", "humantime", "once_cell", "pem", "thiserror", "untrusted"]
+std = ["derp", "getrandom", "once_cell", "pem", "thiserror", "untrusted"]
 testing = ["proptest", "rand_pcg"]
 # DEPRECATED - use "testing" instead of "gens".
 gens = ["testing"]
