@@ -1042,9 +1042,6 @@ where
             }
         };
 
-        #[cfg(feature = "test-support")]
-        dump_debug_info(&error, instance);
-
         if let Some(host_error) = error.as_host_error() {
             // If the "error" was in fact a trap caused by calling `ret` then
             // this is normal operation and we should return the value captured
@@ -1393,9 +1390,6 @@ where
                 return Ok(runtime.take_host_buffer().unwrap_or(CLValue::from_t(())?));
             }
         };
-
-        #[cfg(feature = "test-support")]
-        dump_debug_info(&error, instance);
 
         if let Some(host_error) = error.as_host_error() {
             // If the "error" was in fact a trap caused by calling `ret` then this is normal
@@ -2894,27 +2888,5 @@ where
         }
 
         Ok(Ok(()))
-    }
-}
-
-#[cfg(feature = "test-support")]
-fn dump_debug_info(error: &wasmi::Error, instance: wasmi::ModuleRef) {
-    // Currently, we're only interested in the details for the `Unreachable` error.
-    match error {
-        wasmi::Error::Trap(trap) => match trap.kind() {
-            TrapKind::Unreachable => {
-                eprintln!("Wasm execution error: TrapCode::Unreachable");
-                eprintln!(
-                    "current instance stack height = {}",
-                    if let Some(stack_height) = instance.globals().last() {
-                        format!("{:?}", stack_height.get())
-                    } else {
-                        "unknown".to_string()
-                    }
-                );
-            }
-            _ => (),
-        },
-        _ => (),
     }
 }
